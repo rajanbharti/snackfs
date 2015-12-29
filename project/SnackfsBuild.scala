@@ -24,9 +24,9 @@ object SnackfsBuild extends Build {
 
   lazy val VERSION = "0.6.1-EA"
 
-  lazy val CAS_VERSION = "1.2.12"
+  lazy val CAS_VERSION = "2.2.4"
 
-  lazy val THRIFT_VERSION = "0.7.0"
+  lazy val THRIFT_VERSION = "0.9.2"
 
   lazy val TWITTER_UTIL_VERSION = "6.7.0"
 
