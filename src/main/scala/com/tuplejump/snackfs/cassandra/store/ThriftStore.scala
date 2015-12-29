@@ -34,7 +34,7 @@ import java.math.BigInteger
 import java.util.UUID
 import java.io.InputStream
 import com.tuplejump.snackfs.util.{LogConfiguration, AsyncUtil}
-import org.apache.cassandra.dht.Murmur3Partitioner
+import org.apache.cassandra.dht.{LocalPartitioner, IPartitioner, Murmur3Partitioner}
 import org.apache.thrift.async.TAsyncClientManager
 import org.apache.thrift.protocol.TBinaryProtocol
 import org.apache.thrift.transport.TNonblockingSocket
@@ -69,7 +69,7 @@ class ThriftStore(configuration: SnackFSConfiguration) extends FileSystemStore {
 
   private val LOCK_COLUMN_FAMILY_NAME = "createlock"
 
-  private val partitioner = new Murmur3Partitioner()
+  private val partitioner = new Murmur3Partitioner
 
   private var clientPool: ObjectPool[ThriftClientAndSocket] = _
 
@@ -570,9 +570,10 @@ class ThriftStore(configuration: SnackFSConfiguration) extends FileSystemStore {
                 val xr = ring.filter {
                   p =>
                     if (p._2 < p._3) {
-                      p._2 <= token.token && p._3 >= token.token
+                      p._2 <= token.getTokenValue.toString.toLong && p._3 >= token.getTokenValue.toString.toLong
                     } else {
-                      (p._2 <= token.token && Long.MaxValue >= token.token) || (p._3 >= token.token && Long.MinValue <= token.token)
+                      ((p._2 <= token.getTokenValue.toString.toLong && Long.MaxValue >= token.getTokenValue.toString.toLong)
+                        || (p._3 >= token.getTokenValue.toString.toLong && Long.MinValue <= token.getTokenValue.toString.toLong))
                     }
                 }
 
