@@ -72,7 +72,9 @@ object SnackfsBuild extends Build {
     "org.scalatest" %% "scalatest" % "1.9.1" % "it,test",
     "org.apache.commons" % "commons-io" % "1.3.2" % "it,test",
     "com.novocode" % "junit-interface" % "0.10" % "it,test",
-    "org.apache.commons" % "commons-lang3" % "3.1" % "it,test"
+    "org.apache.commons" % "commons-lang3" % "3.1" % "it,test",
+    "com.github.jbellis" % "jamm" % "0.3.0"
+
   )
 
   lazy val snackSettings = Project.defaultSettings ++ Seq(
